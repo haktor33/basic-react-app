@@ -2,7 +2,7 @@
 import { Form, Input, Button, Checkbox } from 'antd';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { authActions } from '../store/actions/auth.actions'
+import { authActions } from 'store/actions/auth.actions'
 import { authService } from '../services/auth.services'
 
 const Login = (props) => {
